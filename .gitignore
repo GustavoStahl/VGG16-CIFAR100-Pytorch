@@ -1,0 +1,5 @@
+__pycache__/
+wandb/
+weights/
+*.tar.gz
+cifar-10*
