@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-# torch.manual_seed(123)
+torch.manual_seed(123)
 
 class VGG16(nn.Module):
     def __init__(self, class_n):

@@ -4,11 +4,6 @@ import torch.nn as nn
 import os
 from tqdm import tqdm
 import wandb
-from torchvision.datasets import CIFAR100
-
-#! temporary
-import numpy as np
-from torchvision import transforms
 
 from cifar100_dataloader import CIFAR100Dataset
 from vgg16 import VGG16
@@ -17,9 +12,7 @@ torch.manual_seed(123)
             
 if __name__ == "__main__":
     print("Beginning training")
-    
-    dataset_path = "cifar-100-python"
-    
+        
     # parameters
     epochs = 100
     batch_size = 32
@@ -28,6 +21,7 @@ if __name__ == "__main__":
     weights_dir = "weights"
     os.makedirs(weights_dir, exist_ok=True)
     
+    dataset_path = "cifar-100-python"
     train_dataset = CIFAR100Dataset(dataset_path, is_train=True)
     test_dataset = CIFAR100Dataset(dataset_path, is_train=False)
 
@@ -54,7 +48,6 @@ if __name__ == "__main__":
     
     best_acc = 0.
     
-    train_images = None
     wandb.init(project="VGG16-CIFAR100")
     for epoch in range(epochs):
         loss_accum = 0
