@@ -16,7 +16,7 @@ if __name__ == "__main__":
     # parameters
     epochs = 100
     batch_size = 32
-    learning_rate = 0.001
+    learning_rate = 0.01
     device = "cuda"
     weights_dir = "weights"
     os.makedirs(weights_dir, exist_ok=True)
@@ -42,7 +42,9 @@ if __name__ == "__main__":
     model = VGG16(class_n).to(device)
     
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+    # optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, 
+                                weight_decay=0.0005)
     
     steps = len(train_dataloader)
     
@@ -50,9 +52,11 @@ if __name__ == "__main__":
     
     wandb.init(project="VGG16-CIFAR100")
     for epoch in range(epochs):
-        loss_accum = 0
+        model.train()
+        
         total = 0
         correct = 0
+        loss_accum = 0
         for step, (images, labels_gt) in enumerate(train_dataloader):
             images = images.to(device)
             labels_gt = labels_gt.to(device)
@@ -77,6 +81,7 @@ if __name__ == "__main__":
             
         wandb.log({"train/loss_avg": loss_accum / len(train_dataloader), "train/acc_avg": 100 * correct / total})
         
+        model.eval()
         with torch.no_grad():
             total = 0
             correct = 0
