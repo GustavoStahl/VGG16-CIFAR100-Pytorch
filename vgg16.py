@@ -10,60 +10,60 @@ class VGG16(nn.Module):
         # 224 x 224
         #NOTE: padding = kernel_size // 2
         self.layer1 = nn.Sequential(nn.Conv2d(3, 64, (3,3), padding=1), 
-                                    nn.GroupNorm(8,64),
-                                    nn.LeakyReLU())
+                                    nn.BatchNorm2d(64),
+                                    nn.ReLU())
         self.layer2 = nn.Sequential(nn.Conv2d(64, 64, (3,3), padding=1), 
-                                    nn.GroupNorm(8,64),
-                                    nn.LeakyReLU(), 
+                                    nn.BatchNorm2d(64),
+                                    nn.ReLU(), 
                                     nn.MaxPool2d((2,2), stride=2))
         # 112 x 112
         self.layer3 = nn.Sequential(nn.Conv2d(64, 128, (3,3), padding=1), 
-                                    nn.GroupNorm(16,128),
-                                    nn.LeakyReLU())
+                                    nn.BatchNorm2d(128),
+                                    nn.ReLU())
         self.layer4 = nn.Sequential(nn.Conv2d(128, 128, (3,3), padding=1), 
-                                    nn.GroupNorm(16,128),
-                                    nn.LeakyReLU(), 
+                                    nn.BatchNorm2d(128),
+                                    nn.ReLU(), 
                                     nn.MaxPool2d((2,2), stride=2))
         # 56 x 56
         self.layer5 = nn.Sequential(nn.Conv2d(128, 256, (3,3), padding=1), 
-                                    nn.GroupNorm(32,256),
-                                    nn.LeakyReLU())
+                                    nn.BatchNorm2d(256),
+                                    nn.ReLU())
         self.layer6 = nn.Sequential(nn.Conv2d(256, 256, (3,3), padding=1), 
-                                    nn.GroupNorm(32,256),
-                                    nn.LeakyReLU())
+                                    nn.BatchNorm2d(256),
+                                    nn.ReLU())
         self.layer7 = nn.Sequential(nn.Conv2d(256, 256, (3,3), padding=1), 
-                                    nn.GroupNorm(32,256),
-                                    nn.LeakyReLU(), 
+                                    nn.BatchNorm2d(256),
+                                    nn.ReLU(), 
                                     nn.MaxPool2d((2,2), stride=2))   
         # 28 x 28
         self.layer8 = nn.Sequential(nn.Conv2d(256, 512, (3,3), padding=1), 
-                                    nn.GroupNorm(64,512),
-                                    nn.LeakyReLU())
+                                    nn.BatchNorm2d(512),
+                                    nn.ReLU())
         self.layer9 = nn.Sequential(nn.Conv2d(512, 512, (3,3), padding=1), 
-                                    nn.GroupNorm(64,512),
-                                    nn.LeakyReLU())
+                                    nn.BatchNorm2d(512),
+                                    nn.ReLU())
         self.layer10 = nn.Sequential(nn.Conv2d(512, 512, (3,3), padding=1), 
-                                     nn.GroupNorm(64,512),
-                                     nn.LeakyReLU(), 
+                                     nn.BatchNorm2d(512),
+                                     nn.ReLU(), 
                                      nn.MaxPool2d((2,2), stride=2))    
         # 14 x 14
         self.layer11 = nn.Sequential(nn.Conv2d(512, 512, (3,3), padding=1), 
-                                     nn.GroupNorm(64,512),
-                                     nn.LeakyReLU())
+                                     nn.BatchNorm2d(512),
+                                     nn.ReLU())
         self.layer12 = nn.Sequential(nn.Conv2d(512, 512, (3,3), padding=1), 
-                                     nn.GroupNorm(64,512),
-                                     nn.LeakyReLU())
+                                     nn.BatchNorm2d(512),
+                                     nn.ReLU())
         self.layer13 = nn.Sequential(nn.Conv2d(512, 512, (3,3), padding=1), 
-                                     nn.GroupNorm(64,512),
-                                     nn.LeakyReLU(), 
+                                     nn.BatchNorm2d(512),
+                                     nn.ReLU(), 
                                      nn.MaxPool2d((2,2), stride=2)) 
         # 7 x 7
-        self.layer14 = nn.Sequential(nn.Flatten(start_dim=1),
+        self.layer14 = nn.Sequential(nn.Flatten(),
                                      nn.Linear(7*7*512, 4096),
-                                     nn.LeakyReLU(),
+                                     nn.ReLU(),
                                      nn.Dropout(0.5))
         self.layer15 = nn.Sequential(nn.Linear(4096, 4096),
-                                     nn.LeakyReLU(),
+                                     nn.ReLU(),
                                      nn.Dropout(0.5))
         self.layer16 = nn.Sequential(nn.Linear(4096, class_n))
         
